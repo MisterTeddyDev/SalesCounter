@@ -250,6 +250,7 @@ class SalesItem {
 	JPanel menu = new JPanel();
 	JLabel itemName = new JLabel("Missing Item Name");
 	JLabel soldAmountDisplay = new JLabel("Total Sold: 0");
+	JLabel amountLeft = new JLabel();
 	JButton itemSoldBtn = new JButton("We Sold One");
 
 	// profit calculator variables
@@ -261,7 +262,8 @@ class SalesItem {
 
 	public SalesItem(Product product) {
 		name = product.Name;
-
+		
+		amountLeft.setText("Inventory: " + product.Amount);
 		itemSoldBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -269,13 +271,16 @@ class SalesItem {
 				soldAmountDisplay.setText("Total Sold: " + soldCount);
 				profitNum = product.Price * soldCount;
 				profit.setText("Total: $" + product.Price * soldCount);
+				product.Amount--;
+				amountLeft.setText("Inventory: " + product.Amount);
+				
 			}
 		});
 
 		itemName.setText("<html><h3>" + product.Name + "</h3></html>");
 
 		// menu settings
-		menu.setLayout(new GridLayout(6, 0));
+		menu.setLayout(new GridLayout(7, 0));
 		menu.setBackground(new Color(200, 100, 100));
 		menu.setBorder(BorderFactory.createEtchedBorder());
 
@@ -284,6 +289,7 @@ class SalesItem {
 		menu.add(new JLabel("Price: " + product.Price));// 2
 		menu.add(new JLabel()); // 3
 		menu.add(soldAmountDisplay, Component.CENTER_ALIGNMENT); // 4
+		menu.add(amountLeft);
 		menu.add(profit); // 5
 		menu.add(itemSoldBtn, Component.BOTTOM_ALIGNMENT); // 6
 	}
