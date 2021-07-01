@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap');
+
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+body .nav {
+	color: rgb(200,200,200);
+	margin: 0%;
+	float: top;
+	padding: 0px;
+     z-index: 100;
+     background-color: rgb(50, 60, 70);
+     overflow: hidden;
+     width: 100%;
+}
+
+body .nav a {
+     display: inline-block;
+     margin: inherit;
+     background-color: rgb(50, 60, 70);
+     overflow: hidden;
+     padding: 15px;
+     background-color: inherit;
+     float:left;
+     transition-duration: 0.4s;
+     left: 0;
+     color: inherit;
+     border-left: 2px solid rgb(50,60,70);
+     text-decoration: none;
+     color: inherit;
+}
+
+body .nav a:hover {
+     background-color: rgb(60,70,100);
+     border-left: 2px solid rgb(70,130,130);
+}

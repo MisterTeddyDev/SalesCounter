@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+     <meta charset="utf-8">
+     <title>Sales Counter - Home</title>
+     <link rel="stylesheet" href="css/nav.scss">
+     <link rel="stylesheet" href="css/index.scss">
+
+</head>
+<body onscroll="swipeOut('move');">
+     <div class="background"></div>
+
+
+     <div class="nav">
+          <a href="index.html">Home</a>
+          <a href="download.html">Download</a>
+		<a href="updates.html">Updates</a>
+     </div>
+     <div class="title" class="move">
+          <h1>Sales Counter</h1>
+          <p>An app for running sales, made for stupid people.</p>
+     </div>
+
+    <!--Simple-->
+    <div id="leftimg" class="move"> <img src="imgs/startmenu.png" alt="Setup menu for product.">
+         <div class="text">
+             <h2>Simple to use!</h2>
+               <p>
+                   Just enter your products in the easy to use product menu, and you area ready to go. No thinking required.
+               </p>
+          </div>
+     </div>
+
+     <!--automatic-->
+     <div id="rightimg" class="move"> <img src="imgs/mainmenu.png" alt="Main menu">
+         <div class="text">
+              <h2>Even you could use it!</h2>
+              <p>
+                   It was designed to do all the thinking for you, so you don't have to.It automaticaly counts the amount sold, inventory left, and profit all by itself. It even tells you your gross revenue on the exit page, so you don't have to do math.
+              </p>
+          </div>
+     </div>
+
+     <!--free-->
+     <div id="leftimg" class="move"> <img src="imgs/exitmenu.png" alt="Are you blind?">
+          <div class="text">
+               <h2>Its free and open source!</h2>
+               <p>
+                    This software is available for free under the GNU General Public Licence v2.0. This licence means that anybody can use this software for free, and modify it however they like.
+               </p>
+          </div>
+     </div>
+
+     <!--platform independent -->
+     <div id="rightimg" class="move"> <img src="imgs/terminal.png" alt="random stuff i put in my shell">
+          <div class="text">
+               <h2>Platform independent.</h2>
+               <p>
+                    Because this software uses Java, it is available on all operating systems and computers with the Java compiler (JRE or JDK of version 1.8 or above). it can be run by typing the command "java -jar [filename].jar". You need to set the filename to whatever you have the ".jar" executable named as on you computer. You will also need to type the command from the same directory as you have the file stored in.
+               </p>
+          </div>
+     </div>
+  </body>
+
+     <!--Window swipe function-->
+     <script type="text/javascript">
+          function swipeOut(className) {
+
+              var items = document.getElementsByClassName(className);
+
+               for(var i = 0, length = items.length; i < length; i++) {
+                    items[i].style.transform = "translateX(" + swipeamount(items[i]) + "%)";
+               }
+
+          }
+
+          function swipeamount (a) {
+               var bounding = a.getBoundingClientRect();
+               var out;
+
+               //bottom
+               if (bounding.top + (bounding.height / 2) > (window.innerHeight || document.documentElement.clientHeight)) {
+                    out = 100 - ((document.documentElement.clientHeight - bounding.top) / (bounding.height / 2) * 100);
+                    console.log(out);
+                    out = -out;
+               } else
+
+               //top
+               if (bounding.bottom - (bounding.height / 2) < 0) {
+                    out = 100 - (bounding.bottom / (bounding.height / 2)  * 100);
+               } else {
+                    out = 0;
+               }
+               return out;
+          }
+     </script>
+</html>
