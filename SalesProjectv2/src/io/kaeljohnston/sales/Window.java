@@ -22,7 +22,7 @@ public class Window {
 		contentPane.setPreferredSize(windowSize);
 
 		contentPane.setLayout(new GridLayout(0, 1));
-		frame.setBackground(Color.red);
+		frame.setBackground(Color.BLUE);
 		frame.setTitle("Sales Tracking");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
@@ -65,6 +65,7 @@ public class Window {
 			panel.add(new JLabel());
 		panel.add(no);
 		panel.add(yes);
+		exitPane.setBackground(Color.red);
 		exitPane.add(panel);
 		exitPane.pack();
 		exitPane.setVisible(true);

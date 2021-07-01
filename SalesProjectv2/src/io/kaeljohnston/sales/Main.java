@@ -46,12 +46,14 @@ public class Main {
 			JButton addBtn = new JButton("Add");
 
 			JTextField nameField = new JTextField();
-			JFormattedTextField priceField = new JFormattedTextField(new DecimalFormat("#.##"));
+			JFormattedTextField ourPriceField = new JFormattedTextField(new DecimalFormat("#.##"));
+			JFormattedTextField salePriceField = new JFormattedTextField(new DecimalFormat("#.##"));
 			JFormattedTextField amountField = new JFormattedTextField(new DecimalFormat("#"));
 
 			// storage variables
 			String name = "xx04";
-			double price = -0.1f;
+			double ourPrice = -0.1f;
+			double salePrice = -0.1f;
 			int amount = -1;
 
 			public inputPanel() {
@@ -59,22 +61,33 @@ public class Main {
 
 					// nameField settings
 					nameField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
-					nameField.setColumns(12);
+					nameField.setColumns(8);
 					nameField.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							name = priceField.getText();
+							name = ourPriceField.getText();
 						}
 					});
 
-					// priceField settings
-					priceField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
-					priceField.setColumns(8);
-					priceField.addActionListener(new ActionListener() {
+					// ourPriceField settings
+					ourPriceField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+					ourPriceField.setColumns(8);
+					ourPriceField.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							price = Double.parseDouble(priceField.getText());
-							priceField.setText("");
+							ourPrice = Double.parseDouble(ourPriceField.getText());
+							ourPriceField.setText("");
+						}
+					});
+
+					// salePriceField settings
+					salePriceField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+					salePriceField.setColumns(8);
+					salePriceField.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							salePrice = Double.parseDouble(salePriceField.getText());
+							ourPriceField.setText("");
 						}
 					});
 
@@ -84,7 +97,7 @@ public class Main {
 					amountField.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							price = Double.parseDouble(amountField.getText());
+							amount = Integer.parseInt(amountField.getText());
 						}
 					});
 
@@ -92,12 +105,13 @@ public class Main {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							name = nameField.getText();
-							price = Double.parseDouble(priceField.getText());
-							amount = Integer.parseInt(amountField.getText());
-							if (name != "xx04" && price != -0.1f && amount != -1 && products.size() < 10) {
-								products.add(new Product(name, price, amount));
-								String productName = "Name: " + name + " | Price: " + price + 
-										" | Inventory: " + amount;
+							ourPrice = Double.parseDouble(ourPriceField.getText()); // get how much it costs us
+							salePrice = Double.parseDouble(salePriceField.getText());
+							amount = Integer.parseInt(amountField.getText()); // get amount
+							if (name != "xx04" && ourPrice != -0.1f && amount != -1 && products.size() < 10) {
+								products.add(new Product(name, ourPrice, salePrice, amount));
+								String productName = "Name: " + name + " | Our Price $" + ourPrice + " | Sale Price: $"
+										+ salePrice + " | Inventory: " + amount;
 								String txt = productList.getText() + "<p>" + productName + "</p>";
 								productList.setText(txt);
 							}
@@ -108,12 +122,19 @@ public class Main {
 				// frame settings
 				frame.setLayout(new FlowLayout());
 				frame.setBackground(new Color(150, 200, 200));
-				frame.setPreferredSize(new Dimension(WINDOW_WIDTH, 40));
+				frame.setPreferredSize(new Dimension(WINDOW_WIDTH, 80));
 				frame.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, false));
-				frame.add(new JLabel("Product Name: "));
+
+				// product name
+				frame.add(new JLabel("Name: "));
 				frame.add(nameField);
-				frame.add(new JLabel("Product Price: $"));
-				frame.add(priceField);
+				// buy price
+				frame.add(new JLabel("Our Price: $"));
+				frame.add(ourPriceField);
+				// sale price
+				frame.add(new JLabel("Sale Price: $"));
+				frame.add(salePriceField);
+				// amount in inventory
 				frame.add(new JLabel("Inventory: "));
 				frame.add(amountField);
 				frame.add(addBtn);
@@ -160,9 +181,9 @@ public class Main {
 
 		try {
 			int layoutRows = 1;
-			if(products.size() > 5)
+			if (products.size() > 5)
 				layoutRows = 2;
-				
+
 			content.setLayout(new GridLayout(layoutRows, 5));
 		} catch (Exception e) {
 			content.setLayout(new GridLayout(1, 1));
@@ -214,8 +235,11 @@ public class Main {
 		JLabel total = new JLabel();
 		JButton exitBtn = new JButton("Exit");
 		double profit = 0f;
-		for (SalesItem i : itemList)
+		double gross = 0f;
+		for (SalesItem i : itemList) {
 			profit += i.profitNum;
+			gross += i.grossNum;
+		}
 
 		// exit button settings
 		exitBtn.addActionListener(new ActionListener() {
@@ -224,7 +248,8 @@ public class Main {
 				wndw.exit();
 			}
 		});
-		total.setText("<html><h1><b>Total Expected Profit: $" + rounding.round(profit, 2) + "</b></h1></html>");
+		total.setText("<html>" + "<h1>" + "<b>Total Profit: $" + rounding.round(profit, 2) + "</b>" + "</h1>"
+				+ "<p>Gross Revenue: $" + gross + "</p>" + "</html>");
 		total.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT / 5));
 		// menu settings
 		menu.setBackground(new Color(100, 200, 200));
@@ -259,21 +284,22 @@ class SalesItem {
 
 	public String name = "";
 	public double profitNum = 0f;
+	public double grossNum = 0f;
 
 	public SalesItem(Product product) {
 		name = product.Name;
-		
+
 		amountLeft.setText("Inventory: " + product.Amount);
 		itemSoldBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				soldCount++;
 				soldAmountDisplay.setText("Total Sold: " + soldCount);
-				profitNum = product.Price * soldCount;
-				profit.setText("Total: $" + product.Price * soldCount);
+				profitNum = (product.SalePrice - product.OurPrice) * soldCount;
+				grossNum = (product.SalePrice * soldCount);
+				profit.setText("Total: $" + profitNum);
 				product.Amount--;
 				amountLeft.setText("Inventory: " + product.Amount);
-				
 			}
 		});
 
@@ -286,7 +312,7 @@ class SalesItem {
 
 		// adding items to menu
 		menu.add(itemName, Component.CENTER_ALIGNMENT); // 1
-		menu.add(new JLabel("Price: " + product.Price));// 2
+		menu.add(new JLabel("Price: " + product.SalePrice));// 2
 		menu.add(new JLabel()); // 3
 		menu.add(soldAmountDisplay, Component.CENTER_ALIGNMENT); // 4
 		menu.add(amountLeft);
@@ -296,14 +322,17 @@ class SalesItem {
 }
 
 class Product {
-	String Name;
-	double Price;
-	int Amount;
+	public String Name;
+	public double OurPrice;
+	public double SalePrice;
+	public int Amount;
 
-	public Product(String name, double price, int amount) {
+	public Product(String name, double ourPrice, double salePrice, int amount) {
 		Name = name;
-		Price = price;
+		OurPrice = ourPrice;
+		SalePrice = salePrice;
 		Amount = amount;
+
 	}
 }
 
