@@ -67,7 +67,6 @@
 			//bottom
 			if (bounding.top + (bounding.height / 2) > (window.innerHeight || document.documentElement.clientHeight)) {
 				out = 100 - ((document.documentElement.clientHeight - bounding.top) / (bounding.height / 2) * 100);
-				console.log(out);
 				out = -out;
 			} else
 
@@ -85,9 +84,9 @@
 			items = document.getElementsByClassName(className);
 
 			for(let i = 0, length = items.length; i < length; i++) {
-				var randomNum = (Math.round((Math.random() / 4) * 510));
-				console.log(randomNum);
-				items[i].style.backgroundColor = "hsl(" + randomNum + ",30%,40%)";
+				var randomNum = (Math.round(Math.random() * 255));
+				var randomNum2 = (Math.round(Math.random() * 20 + 20));
+				items[i].style.backgroundColor = "hsl(" + randomNum + "," + randomNum2 + "%,40%)";
 			}
 		}
 	</script>
