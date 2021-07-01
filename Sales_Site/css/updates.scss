@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap');
+
+
+.background {
+	position: fixed;
+	z-index: -1;
+	min-width: 100%;
+	min-height: 100%;
+	background-color: black;
+	background-image: url("bkimgs/mnbg.jpg");
+	background-repeat: bottom;
+	background-size: cover;
+	background-repeat: no-repeat;
+	filter: blur(8px);
+}
+
+body {
+	background-color: black;
+	color: rgb(200,200,200);
+	font-family: 'Open Sans', sans-serif;
+	margin: 0%;
+	padding: 0%;
+}
+
+body .update {
+	max-width: 100%;
+	padding: 3%;
+	margin: inherit;
+}
+
+body .update h1 {
+	color: rgb(50,170,170);
+}
+
+body .update p {
+	margin: 5px;
+}
+
+body .update a {
+	padding: 7px;
+	color: rgb(130, 130, 160);
+	transition-duration: 0.4s;
+	text-decoration: none;
+}
+
+body .update a:hover {
+	color: rgb(200, 255, 255);
+	text-decoration: underline;
+}
